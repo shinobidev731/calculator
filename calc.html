@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scientific Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="calc.js" defer></script>
+</head>
+<body>
+  <!-- Physical Calculator Body -->
+  <main class="calculator" role="region" aria-label="Scientific Calculator">
+    
+    <!-- Top Header Bar: Brand, Solar Cells, and DEG/RAD Toggle -->
+    <header class="calc-top-bar">
+      <div class="calc-brand">CARDINAL<span></span></div>
+      <div class="solar-strip" aria-hidden="true">
+        <div class="solar-cell"></div>
+        <div class="solar-cell"></div>
+        <div class="solar-cell"></div>
+        <div class="solar-cell"></div>
+      </div>
+      <button 
+        type="button" 
+        id="mode-toggle" 
+        class="mode-btn" 
+        aria-label="Angle mode: Degrees. Click to switch to Radians."
+      >
+        DEG
+      </button>
+    </header>
+
+    <!-- LCD Display Screen -->
+    <section class="screen" aria-label="Calculator display">
+      <div id="expression-display" class="expression-line" aria-hidden="true">&nbsp;</div>
+      <input 
+        type="text" 
+        id="main-display" 
+        class="result-line" 
+        value="0" 
+        readonly 
+        aria-label="Current value or result" 
+        aria-live="polite"
+      >
+    </section>
+
+    <!-- Physical 4-Column Keypad -->
+    <section class="keypad" role="group" aria-label="Calculator keys">
+      <!-- Row 1: Trigonometric Functions & Backspace -->
+      <button type="button" class="btn btn-func" data-func="sin" aria-label="Sine">sin</button>
+      <button type="button" class="btn btn-func" data-func="cos" aria-label="Cosine">cos</button>
+      <button type="button" class="btn btn-func" data-func="tan" aria-label="Tangent">tan</button>
+      <button type="button" class="btn btn-action" data-action="delete" aria-label="Delete last character">⌫</button>
+
+      <!-- Row 2: All Clear, Parentheses & Divide -->
+      <button type="button" class="btn btn-clear" data-action="clear" aria-label="All Clear">AC</button>
+      <button type="button" class="btn btn-action" data-insert="(" aria-label="Open parenthesis">(</button>
+      <button type="button" class="btn btn-action" data-insert=")" aria-label="Close parenthesis">)</button>
+      <button type="button" class="btn btn-op" data-op="/" aria-label="Divide">÷</button>
+
+      <!-- Row 3: Numbers 7-9 & Multiply -->
+      <button type="button" class="btn btn-num" data-num="7">7</button>
+      <button type="button" class="btn btn-num" data-num="8">8</button>
+      <button type="button" class="btn btn-num" data-num="9">9</button>
+      <button type="button" class="btn btn-op" data-op="*" aria-label="Multiply">×</button>
+
+      <!-- Row 4: Numbers 4-6 & Subtract -->
+      <button type="button" class="btn btn-num" data-num="4">4</button>
+      <button type="button" class="btn btn-num" data-num="5">5</button>
+      <button type="button" class="btn btn-num" data-num="6">6</button>
+      <button type="button" class="btn btn-op" data-op="-" aria-label="Subtract">−</button>
+
+      <!-- Row 5: Numbers 1-3 & Add -->
+      <button type="button" class="btn btn-num" data-num="1">1</button>
+      <button type="button" class="btn btn-num" data-num="2">2</button>
+      <button type="button" class="btn btn-num" data-num="3">3</button>
+      <button type="button" class="btn btn-op" data-op="+" aria-label="Add">+</button>
+
+      <!-- Row 6: 0, Decimal Point, Percent & Equals -->
+      <button type="button" class="btn btn-num" data-num="0">0</button>
+      <button type="button" class="btn btn-num" data-insert="." aria-label="Decimal point">.</button>
+      <button type="button" class="btn btn-action" data-op="%" aria-label="Percent">%</button>
+      <button type="button" class="btn btn-equals" data-action="equals" aria-label="Calculate">=</button>
+    </section>
+
+  </main>
+</body>
+</html>

@@ -1,0 +1,391 @@
+/* ==========================================================================
+   CALCULATOR STYLESHEET
+   A sleek, tactile calculator inspired by modern physical hardware.
+   ========================================================================== */
+
+/* Design Tokens & Theme Variables */
+:root {
+  --calc-width: 350px;
+  --calc-radius: 28px;
+  --key-radius: 14px;
+  --screen-radius: 16px;
+
+  /* Color Palette */
+  --bg-surface: #0f172a;
+  --calc-body-bg: linear-gradient(165deg, #1e293b 0%, #0f172a 100%);
+  --calc-border: rgba(255, 255, 255, 0.08);
+  --calc-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.06);
+
+  /* Screen Colors */
+  --screen-bg: #060a12;
+  --screen-border: rgba(255, 255, 255, 0.05);
+  --screen-inner-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.6);
+  --text-expression: #94a3b8;
+  --text-main: #f8fafc;
+
+  /* Button Colors & Tactile Shadows */
+  --btn-num-bg: #334155;
+  --btn-num-hover: #3e4f66;
+  --btn-num-active: #273344;
+  --btn-num-shadow: #1e2736;
+  --btn-num-text: #f8fafc;
+
+  --btn-op-bg: #f97316;
+  --btn-op-hover: #fb923c;
+  --btn-op-active: #ea580c;
+  --btn-op-shadow: #9a3412;
+  --btn-op-text: #ffffff;
+
+  --btn-action-bg: #475569;
+  --btn-action-hover: #56677f;
+  --btn-action-active: #334155;
+  --btn-action-shadow: #1e293b;
+  --btn-action-text: #f1f5f9;
+
+  --btn-clear-bg: #ef4444;
+  --btn-clear-hover: #f87171;
+  --btn-clear-active: #dc2626;
+  --btn-clear-shadow: #991b1b;
+  --btn-clear-text: #ffffff;
+
+  --btn-func-bg: #1e293b;
+  --btn-func-border: rgba(56, 189, 248, 0.25);
+  --btn-func-hover: rgba(56, 189, 248, 0.15);
+  --btn-func-active: #0f172a;
+  --btn-func-shadow: #0a0f1d;
+  --btn-func-text: #38bdf8;
+
+  --btn-equals-bg: #10b981;
+  --btn-equals-hover: #34d399;
+  --btn-equals-active: #059669;
+  --btn-equals-shadow: #047857;
+  --btn-equals-text: #ffffff;
+
+  /* Typography */
+  --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* CSS Reset & Global Layout */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-surface);
+  background-image: 
+    radial-gradient(at 50% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 60%),
+    radial-gradient(at 100% 100%, rgba(249, 115, 22, 0.08) 0px, transparent 50%);
+  font-family: var(--font-system);
+  padding: 24px 16px;
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --------------------------------------------------------------------------
+   Calculator Hardware Body
+   -------------------------------------------------------------------------- */
+.calculator {
+  width: 100%;
+  max-width: var(--calc-width);
+  background: var(--calc-body-bg);
+  border: 1px solid var(--calc-border);
+  border-radius: var(--calc-radius);
+  box-shadow: var(--calc-shadow);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+
+/* Top Bar: Brand, Solar Cell Decor, Mode Switch */
+.calc-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.calc-brand {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.calc-brand span {
+  color: #f97316;
+}
+
+.solar-strip {
+  display: flex;
+  gap: 3px;
+  background: #090d16;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.solar-cell {
+  width: 9px;
+  height: 16px;
+  background: linear-gradient(180deg, #382417 0%, #1f140e 100%);
+  border-radius: 1px;
+  border-right: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.mode-btn {
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid var(--btn-func-border);
+  color: #38bdf8;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.mode-btn:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+}
+
+/* --------------------------------------------------------------------------
+   Calculator LCD Screen
+   -------------------------------------------------------------------------- */
+.screen {
+  background: var(--screen-bg);
+  border: 1px solid var(--screen-border);
+  border-radius: var(--screen-radius);
+  box-shadow: var(--screen-inner-shadow);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 104px;
+  overflow: hidden;
+}
+
+.expression-line {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--text-expression);
+  text-align: right;
+  min-height: 1.3rem;
+  white-space: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.expression-line::-webkit-scrollbar {
+  display: none;
+}
+
+.result-line {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-main);
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 2.2rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  font-variant-numeric: tabular-nums;
+  cursor: default;
+}
+
+/* --------------------------------------------------------------------------
+   Calculator Keypad & 3D Tactile Buttons
+   -------------------------------------------------------------------------- */
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+/* Base Button Appearance with 3D Key Travel */
+.btn {
+  height: 52px;
+  border: none;
+  border-radius: var(--key-radius);
+  font-family: var(--font-system);
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+  position: relative;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.1s ease;
+}
+
+/* Accessible focus ring */
+.btn:focus-visible, .mode-btn:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 2px;
+}
+
+/* Physical 3D keypress depression */
+.btn:active, .btn.btn-active {
+  transform: translateY(3px);
+  filter: brightness(1.15);
+}
+
+/* 1. Number Keys */
+.btn-num {
+  background: var(--btn-num-bg);
+  color: var(--btn-num-text);
+  box-shadow: 0 4px 0 var(--btn-num-shadow);
+}
+
+.btn-num:hover {
+  background: var(--btn-num-hover);
+}
+
+.btn-num:active, .btn-num.btn-active {
+  box-shadow: 0 1px 0 var(--btn-num-shadow);
+}
+
+/* 2. Scientific / Trig Keys */
+.btn-func {
+  background: var(--btn-func-bg);
+  color: var(--btn-func-text);
+  border: 1px solid var(--btn-func-border);
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 0 var(--btn-func-shadow);
+}
+
+.btn-func:hover {
+  background: var(--btn-func-hover);
+}
+
+.btn-func:active, .btn-func.btn-active {
+  box-shadow: 0 1px 0 var(--btn-func-shadow);
+}
+
+/* 3. Operator Keys */
+.btn-op {
+  background: var(--btn-op-bg);
+  color: var(--btn-op-text);
+  font-size: 1.4rem;
+  box-shadow: 0 4px 0 var(--btn-op-shadow);
+}
+
+.btn-op:hover {
+  background: var(--btn-op-hover);
+}
+
+.btn-op:active, .btn-op.btn-active {
+  box-shadow: 0 1px 0 var(--btn-op-shadow);
+}
+
+/* 4. Action Keys (Delete, Parentheses) */
+.btn-action {
+  background: var(--btn-action-bg);
+  color: var(--btn-action-text);
+  font-size: 1.15rem;
+  box-shadow: 0 4px 0 var(--btn-action-shadow);
+}
+
+.btn-action:hover {
+  background: var(--btn-action-hover);
+}
+
+.btn-action:active, .btn-action.btn-active {
+  box-shadow: 0 1px 0 var(--btn-action-shadow);
+}
+
+/* 5. Clear Key (AC) */
+.btn-clear {
+  background: var(--btn-clear-bg);
+  color: var(--btn-clear-text);
+  font-size: 1.05rem;
+  font-weight: 700;
+  box-shadow: 0 4px 0 var(--btn-clear-shadow);
+}
+
+.btn-clear:hover {
+  background: var(--btn-clear-hover);
+}
+
+.btn-clear:active, .btn-clear.btn-active {
+  box-shadow: 0 1px 0 var(--btn-clear-shadow);
+}
+
+/* 6. Equals Key (=) */
+.btn-equals {
+  background: var(--btn-equals-bg);
+  color: var(--btn-equals-text);
+  font-size: 1.5rem;
+  font-weight: 700;
+  box-shadow: 0 4px 0 var(--btn-equals-shadow);
+}
+
+.btn-equals:hover {
+  background: var(--btn-equals-hover);
+}
+
+.btn-equals:active, .btn-equals.btn-active {
+  box-shadow: 0 1px 0 var(--btn-equals-shadow);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Adaptations
+   -------------------------------------------------------------------------- */
+@media (max-width: 380px) {
+  .calculator {
+    padding: 18px 14px;
+    gap: 16px;
+  }
+  
+  .btn {
+    height: 48px;
+    font-size: 1.1rem;
+    border-radius: 12px;
+  }
+
+  .result-line {
+    font-size: 1.85rem;
+  }
+}
+
+@media (max-height: 620px) {
+  body {
+    padding: 10px;
+  }
+
+  .calculator {
+    padding: 16px 14px;
+    gap: 12px;
+  }
+
+  .screen {
+    min-height: 80px;
+    padding: 10px 14px;
+  }
+
+  .result-line {
+    font-size: 1.7rem;
+  }
+
+  .btn {
+    height: 44px;
+    font-size: 1.05rem;
+  }
+}
